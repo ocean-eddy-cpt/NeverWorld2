@@ -99,9 +99,8 @@ class topo:
 
         # Draw coastlines in NeverWorld2 space (i.e. offset in longitude)
         for geo in cartopy.feature.COASTLINE.geometries():
-            for g in geo:
-                x,y = zip(*list(g.coords))
-                ax.plot(numpy.array(x)-Atlantic_lon_offset,y, 'k:')
+            x,y=geo.xy
+            ax.plot(numpy.array(x)-Atlantic_lon_offset,y, 'k:')
         ax.set_xlim(self.xg.min(), self.xg.max())
         ax.set_ylim(self.yg.min(), self.yg.max())
         ax.set_aspect('equal')
