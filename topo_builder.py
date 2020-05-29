@@ -95,15 +95,16 @@ class topo:
         ax.plot(x, topo.scurve(x,0,1), label='scurve(x,0,1)')
         ax.plot(x, topo.coastal_sprofile(x,0,1,.2), label='coastal_sprofile(x,0,1,.2)')
         ax.legend()
-    def plot(self, fig, Atlantic_lon_offset=-84):
+    def plot(self, fig, Atlantic_lon_offset=None):
         ax = fig.add_subplot(2,2,1)
         im = ax.contour(self.xc, self.yc, self.z, levels=numpy.arange(-self.D0,1,500))
         fig.colorbar(im, ax=ax); ax.set_title('Depth (plan view)')
 
         # Draw coastlines in NeverWorld2 space (i.e. offset in longitude)
-        for geo in cartopy.feature.COASTLINE.geometries():
-            x,y=geo.xy
-            ax.plot(numpy.array(x)-Atlantic_lon_offset,y, 'k:')
+        if Atlantic_lon_offset is not None:
+            for geo in cartopy.feature.COASTLINE.geometries():
+                x,y=geo.xy
+                ax.plot(numpy.array(x)-Atlantic_lon_offset,y, 'k:')
         ax.set_xlim(self.xg.min(), self.xg.max())
         ax.set_ylim(self.yg.min(), self.yg.max())
         ax.set_aspect('equal')
