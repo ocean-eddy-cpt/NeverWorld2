@@ -41,7 +41,7 @@ SOUTHLAT = -70.0                !   [degrees]
                                 ! The southern latitude of the domain.
 LENLAT = 140.0                  !   [degrees]
                                 ! The latitudinal length of the domain.
-LENLON = 80.0                   !   [degrees]
+LENLON = 60.0                   !   [degrees]
                                 ! The longitudinal length of the domain.
 TOPO_CONFIG = "bbuilder"        !
                                 ! This specifies how bathymetry is specified:
@@ -54,6 +54,7 @@ TOPO_CONFIG = "bbuilder"        !
                                 !       wall at the southern face.
                                 !     halfpipe - a zonally uniform channel with a half-sine
                                 !       profile in the meridional direction.
+                                !     bbuilder - build topography from list of functions.
                                 !     benchmark - use the benchmark test case topography.
                                 !     Neverworld - use the Neverworld test case topography.
                                 !     DOME - use a slope and channel configuration for the
@@ -69,25 +70,66 @@ TOPO_CONFIG = "bbuilder"        !
                                 !     Phillips - ACC-like idealized topography used in the Phillips config.
                                 !     dense - Denmark Strait-like dense water formation and overflow.
                                 !     USER - call a user modified routine.
-BBUILDER_N = 8
-BBUILDER_001_FUNC = "NS_coast"
-BBUILDER_001_PARS = 0., -40., 90., 5., 0.05
-BBUILDER_002_FUNC = "NS_coast"
-BBUILDER_002_PARS = 80., -40., 90., 5., 0.05
-BBUILDER_003_FUNC = "NS_coast"
-BBUILDER_003_PARS = 0., -90., -60., 5., 0.05
-BBUILDER_004_FUNC = "NS_coast"
-BBUILDER_004_PARS = 80., -90., -60., 5., 0.05
-BBUILDER_005_FUNC = "EW_coast"
-BBUILDER_005_PARS = -70., 0., 80., 5., 0.05
-BBUILDER_006_FUNC = "EW_coast"
-BBUILDER_006_PARS = 70., 0., 80., 5., 0.05
-BBUILDER_007_FUNC = "circ_conic_ridge"
-BBUILDER_007_PARS = 0., -50., 10., 2., 0.5
-BBUILDER_008_FUNC = "ns_conic_ridge"
-BBUILDER_008_PARS = 40., -90., 90., 30., 0.5
 
-! === module Neverworld_initialize_topography ===
+! === module basin_builder ===
+BBUILDER_N = 8                  !
+                                ! Number of pieces of topography to use.
+BBUILDER_001_FUNC = "NS_coast"  !
+                                ! The basin builder function to apply with parameters BBUILDER_001_PARS. Choices
+                                ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
+                                ! NS_SCURVE_RIDGE.
+BBUILDER_001_PARS = 0.0, -40.0, 90.0, 5.0, 200.0 !   [degrees_E,degrees_N,degrees_N,degrees,m]
+                                ! NS_COAST parameters: longitude, starting latitude, ending latitude, footprint
+                                ! radius, shelf depth.
+BBUILDER_002_FUNC = "NS_coast"  !
+                                ! The basin builder function to apply with parameters BBUILDER_002_PARS. Choices
+                                ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
+                                ! NS_SCURVE_RIDGE.
+BBUILDER_002_PARS = 60.0, -40.0, 90.0, 5.0, 200.0 !   [degrees_E,degrees_N,degrees_N,degrees,m]
+                                ! NS_COAST parameters: longitude, starting latitude, ending latitude, footprint
+                                ! radius, shelf depth.
+BBUILDER_003_FUNC = "NS_coast"  !
+                                ! The basin builder function to apply with parameters BBUILDER_003_PARS. Choices
+                                ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
+                                ! NS_SCURVE_RIDGE.
+BBUILDER_003_PARS = 0.0, -90.0, -60.0, 5.0, 200.0 !   [degrees_E,degrees_N,degrees_N,degrees,m]
+                                ! NS_COAST parameters: longitude, starting latitude, ending latitude, footprint
+                                ! radius, shelf depth.
+BBUILDER_004_FUNC = "NS_coast"  !
+                                ! The basin builder function to apply with parameters BBUILDER_004_PARS. Choices
+                                ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
+                                ! NS_SCURVE_RIDGE.
+BBUILDER_004_PARS = 60.0, -90.0, -60.0, 5.0, 200.0 !   [degrees_E,degrees_N,degrees_N,degrees,m]
+                                ! NS_COAST parameters: longitude, starting latitude, ending latitude, footprint
+                                ! radius, shelf depth.
+BBUILDER_005_FUNC = "EW_coast"  !
+                                ! The basin builder function to apply with parameters BBUILDER_005_PARS. Choices
+                                ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
+                                ! NS_SCURVE_RIDGE.
+BBUILDER_005_PARS = -70.0, 0.0, 60.0, 5.0, 200.0 !   [degrees_N,degrees_E,degrees_E,degrees,m]
+                                ! EW_COAST parameters: latitude, starting longitude, ending longitude, footprint
+                                ! radius, shelf depth.
+BBUILDER_006_FUNC = "EW_coast"  !
+                                ! The basin builder function to apply with parameters BBUILDER_006_PARS. Choices
+                                ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
+                                ! NS_SCURVE_RIDGE.
+BBUILDER_006_PARS = 70.0, 0.0, 60.0, 5.0, 200.0 !   [degrees_N,degrees_E,degrees_E,degrees,m]
+                                ! EW_COAST parameters: latitude, starting longitude, ending longitude, footprint
+                                ! radius, shelf depth.
+BBUILDER_007_FUNC = "circ_conic_ridge" !
+                                ! The basin builder function to apply with parameters BBUILDER_007_PARS. Choices
+                                ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
+                                ! NS_SCURVE_RIDGE.
+BBUILDER_007_PARS = 0.0, -50.0, 10.0, 2.0, 2000.0 !   [degrees_E,degrees_N,degrees,degrees,m]
+                                ! CIRC_CONIC_RIDGE parameters: center longitude, center latitude, ring radius,
+                                ! footprint radius, ridge height.
+BBUILDER_008_FUNC = "ns_scurve_ridge" !
+                                ! The basin builder function to apply with parameters BBUILDER_008_PARS. Choices
+                                ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
+                                ! NS_SCURVE_RIDGE.
+BBUILDER_008_PARS = 30.0, -40.0, 90.0, 20.0, 2000.0 !   [degrees_E,degrees_N,degrees_N,degrees,m]
+                                ! NS_SCURVE_RIDGE parameters: longitude, starting latitude, ending latitude,
+                                ! footprint radius, ridge height.
 MAXIMUM_DEPTH = 4000.0          !   [m]
                                 ! The maximum depth of the ocean.
 
@@ -234,7 +276,7 @@ BOUND_CORIOLIS = True           !   [Boolean] default = False
 ! === module MOM_hor_visc ===
 SMAGORINSKY_AH = True           !   [Boolean] default = False
                                 ! If true, use a biharmonic Smagorinsky nonlinear eddy viscosity.
-SMAG_BI_CONST = 0.20            !   [nondim] default = 0.0
+SMAG_BI_CONST = 0.2             !   [nondim] default = 0.0
                                 ! The nondimensional biharmonic Smagorinsky constant, typically 0.015 - 0.06.
 
 ! === module MOM_vert_friction ===
@@ -292,6 +334,11 @@ DTBT = -0.95                    !   [s or nondim] default = -0.98
 ! This module implements lateral diffusion of tracers near boundaries
 
 ! === module MOM_sum_output ===
+DATE_STAMPED_STDOUT = False     !   [Boolean] default = True
+                                ! If true, use dates (not times) in messages to stdout
+ENERGYSAVEDAYS = 5.0            !   [days] default = 1.0
+                                ! The interval in units of TIMEUNIT between saves of the energies of the run and
+                                ! other globally summed diagnostics.
 
 ! === module MOM_surface_forcing ===
 BUOY_CONFIG = "zero"            !
@@ -300,10 +347,11 @@ BUOY_CONFIG = "zero"            !
 WIND_CONFIG = "scurves"         !
                                 ! The character string that indicates how wind forcing is specified. Valid
                                 ! options include (file), (2gyre), (1gyre), (gyres), (zero), and (USER).
-WIND_SCURVES_LATS = -70., -45., -15., 0., 15., 45., 70.
-WIND_SCURVES_TAUX = 0., 0.2 -0.1, -0.02, -0.1, 0.1, 0.
-
-! === module Neverworld_surface_forcing ===
+WIND_SCURVES_LATS = -70.0, -45.0, -15.0, 0.0, 15.0, 45.0, 70.0, 13*90.0 !   [degrees N]
+                                ! A list of latitudes defining a piecewise scurve profile for zonal wind stress.
+WIND_SCURVES_TAUX = 0.0, 0.2, -0.05, -0.01, -0.05, 0.1, 14*0.0 !   [Pa]
+                                ! A list of zonal wind stress values at latitudes WIND_SCURVES_LATS defining a
+                                ! piecewise scurve profile.
 
 ! === module MOM_restart ===
 
@@ -323,8 +371,3 @@ RESTINT = 500.0                 !   [days] default = 0.0
 ! === module MOM_write_cputime ===
 
 ! === module MOM_file_parser ===
-DATE_STAMPED_STDOUT = False     !   [Boolean] default = True
-                                ! If true, use dates (not times) in messages to stdout
-ENERGYSAVEDAYS = 5.0            !   [days] default = 1.0
-                                ! The interval in units of TIMEUNIT between saves of the energies of the run and
-                                ! other globally summed diagnostics.
