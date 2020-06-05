@@ -43,7 +43,7 @@ LENLAT = 140.0                  !   [degrees]
                                 ! The latitudinal length of the domain.
 LENLON = 80.0                   !   [degrees]
                                 ! The longitudinal length of the domain.
-TOPO_CONFIG = "Neverworld2"     !
+TOPO_CONFIG = "bbuilder"        !
                                 ! This specifies how bathymetry is specified:
                                 !     file - read bathymetric information from the file
                                 !       specified by (TOPO_FILE).
@@ -69,6 +69,23 @@ TOPO_CONFIG = "Neverworld2"     !
                                 !     Phillips - ACC-like idealized topography used in the Phillips config.
                                 !     dense - Denmark Strait-like dense water formation and overflow.
                                 !     USER - call a user modified routine.
+BBUILDER_N = 8
+BBUILDER_001_FUNC = "NS_coast"
+BBUILDER_001_PARS = 0., -40., 90., 5., 0.05
+BBUILDER_002_FUNC = "NS_coast"
+BBUILDER_002_PARS = 80., -40., 90., 5., 0.05
+BBUILDER_003_FUNC = "NS_coast"
+BBUILDER_003_PARS = 0., -90., -60., 5., 0.05
+BBUILDER_004_FUNC = "NS_coast"
+BBUILDER_004_PARS = 80., -90., -60., 5., 0.05
+BBUILDER_005_FUNC = "EW_coast"
+BBUILDER_005_PARS = -70., 0., 80., 5., 0.05
+BBUILDER_006_FUNC = "EW_coast"
+BBUILDER_006_PARS = 70., 0., 80., 5., 0.05
+BBUILDER_007_FUNC = "circ_conic_ridge"
+BBUILDER_007_PARS = 0., -50., 10., 2., 0.5
+BBUILDER_008_FUNC = "ns_conic_ridge"
+BBUILDER_008_PARS = 40., -90., 90., 30., 0.5
 
 ! === module Neverworld_initialize_topography ===
 MAXIMUM_DEPTH = 4000.0          !   [m]
@@ -117,7 +134,7 @@ COORD_CONFIG = "file"           !
                                 !     ts_profile - use temperature and salinity profiles
                                 !       (read from COORD_FILE) to set layer densities.
                                 !     USER - call a user modified routine.
-COORD_FILE = "coordinate.nc"    !
+COORD_FILE = "INPUT/coordinate.nc" !
                                 ! The file from which the coordinate densities are read.
 
 ! === module MOM_grid ===
@@ -215,17 +232,9 @@ BOUND_CORIOLIS = True           !   [Boolean] default = False
 ! === module MOM_PressureForce_AFV ===
 
 ! === module MOM_hor_visc ===
-LAPLACIAN = True                !   [Boolean] default = False
-                                ! If true, use a Laplacian horizontal viscosity.
-SMAGORINSKY_KH = True           !   [Boolean] default = False
-                                ! If true, use a Smagorinsky nonlinear eddy viscosity.
-SMAGORINSKY_KH = True           !   [Boolean] default = False
-                                ! If true, use a Smagorinsky nonlinear eddy viscosity.
-SMAG_LAP_CONST = 0.15           !   [nondim] default = 0.0
-                                ! The nondimensional Laplacian Smagorinsky constant, often 0.15.
 SMAGORINSKY_AH = True           !   [Boolean] default = False
                                 ! If true, use a biharmonic Smagorinsky nonlinear eddy viscosity.
-SMAG_BI_CONST = 0.06            !   [nondim] default = 0.0
+SMAG_BI_CONST = 0.20            !   [nondim] default = 0.0
                                 ! The nondimensional biharmonic Smagorinsky constant, typically 0.015 - 0.06.
 
 ! === module MOM_vert_friction ===
@@ -288,9 +297,11 @@ DTBT = -0.95                    !   [s or nondim] default = -0.98
 BUOY_CONFIG = "zero"            !
                                 ! The character string that indicates how buoyancy forcing is specified. Valid
                                 ! options include (file), (zero), (linear), (USER), (BFB) and (NONE).
-WIND_CONFIG = "Neverworld2"     !
+WIND_CONFIG = "scurves"         !
                                 ! The character string that indicates how wind forcing is specified. Valid
                                 ! options include (file), (2gyre), (1gyre), (gyres), (zero), and (USER).
+WIND_SCURVES_LATS = -70., -45., -15., 0., 15., 45., 70.
+WIND_SCURVES_TAUX = 0., 0.2 -0.1, -0.02, -0.1, 0.1, 0.
 
 ! === module Neverworld_surface_forcing ===
 
@@ -305,13 +316,15 @@ RESTART_CONTROL = 3             ! default = 1
                                 ! for a time-stamped file, and odd (bit 0) for a non-time-stamped file. A
                                 ! non-time-stamped restart file is saved at the end of the run segment for any
                                 ! non-negative value.
-RESTINT = 365.0                 !   [days] default = 0.0
+RESTINT = 500.0                 !   [days] default = 0.0
                                 ! The interval between saves of the restart file in units of TIMEUNIT.  Use 0
                                 ! (the default) to not save incremental restart files at all.
 
 ! === module MOM_write_cputime ===
 
 ! === module MOM_file_parser ===
+DATE_STAMPED_STDOUT = False     !   [Boolean] default = True
+                                ! If true, use dates (not times) in messages to stdout
 ENERGYSAVEDAYS = 5.0            !   [days] default = 1.0
                                 ! The interval in units of TIMEUNIT between saves of the energies of the run and
                                 ! other globally summed diagnostics.

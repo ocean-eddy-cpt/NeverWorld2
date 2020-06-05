@@ -1,0 +1,11 @@
+MOM6
+RESTART
+CPU_stats*
+*.nc
+MOM_parameter_doc.*
+available_diags.*
+log*
+ocean.stats*
+time_stamp.out
+exitcode
+run*
