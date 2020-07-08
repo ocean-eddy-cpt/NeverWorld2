@@ -3,7 +3,7 @@
 	url = https://github.com/NOAA-GFDL/FMS
 [submodule "src/MOM6"]
 	path = src/MOM6
-	url = https://github.com/adcroft/MOM6
+	url = https://github.com/ocean-eddy-cpt/MOM6
 [submodule "src/mkmf"]
 	path = src/mkmf
 	url = https://github.com/NOAA-GFDL/mkmf
