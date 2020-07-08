@@ -1,0 +1,2 @@
+module swap intel intel/18.0.5
+module load impi
