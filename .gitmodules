@@ -6,4 +6,4 @@
 	url = https://github.com/ocean-eddy-cpt/MOM6
 [submodule "src/mkmf"]
 	path = src/mkmf
-	url = https://github.com/NOAA-GFDL/mkmf
+	url = https://github.com/ocean-eddy-cpt/mkmf
