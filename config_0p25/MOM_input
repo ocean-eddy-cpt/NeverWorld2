@@ -349,7 +349,7 @@ WIND_CONFIG = "scurves"         !
                                 ! options include (file), (2gyre), (1gyre), (gyres), (zero), and (USER).
 WIND_SCURVES_LATS = -70.0, -45.0, -15.0, 0.0, 15.0, 45.0, 70.0, 13*90.0 !   [degrees N]
                                 ! A list of latitudes defining a piecewise scurve profile for zonal wind stress.
-WIND_SCURVES_TAUX = 0.0, 0.2, -0.05, -0.01, -0.05, 0.1, 14*0.0 !   [Pa]
+WIND_SCURVES_TAUX = 0.0, 0.2, -0.1, -0.02, -0.1, 0.1, 14*0.0 !   [Pa]
                                 ! A list of zonal wind stress values at latitudes WIND_SCURVES_LATS defining a
                                 ! piecewise scurve profile.
 
