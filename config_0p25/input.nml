@@ -9,7 +9,6 @@
 
  &diag_manager_nml
         prepend_date=F,
-        flush_nc_files=T,
  /
 
  &fms_nml
