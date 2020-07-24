@@ -20,6 +20,11 @@ On orion use the environment:
 . scripts/orion-intel-env
 ```
 
+To compile in orion, use
+```
+make -s -j
+```
+
 To compile in orion, use `Makefile` with
 ```
 make TEMPLATE=src/mkmf/templates/orion-intel.mk
@@ -30,5 +35,6 @@ To run a test case use the `submit` script:
 cd config_0p25
 sbatch submit
 ```
+Use `submit_cheyenne` on cheyenne.
 
 To start over, delete the directory `build` before continuing with the steps.
