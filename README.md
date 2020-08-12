@@ -20,7 +20,7 @@ On orion use the environment:
 . scripts/orion-intel-env
 ```
 
-To compile in orion, use
+To compile, use
 ```
 make -s -j
 ```
