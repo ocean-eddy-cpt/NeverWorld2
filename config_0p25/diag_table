@@ -9,7 +9,7 @@
 # Prognostic fields:
 #"ocean_model", "u",           "u",           "snapshots%8dy", "all", "none", "none", 2
 #"ocean_model", "v",           "v",           "snapshots%8dy", "all", "none", "none", 2
-#"ocean_model", "h",           "h",           "snapshots%8dy", "all", "none", "none", 2
+ "ocean_model", "h",           "h",           "snapshots%8dy", "all", "none", "none", 2
 #"ocean_model", "e",           "e",           "snapshots%8dy", "all", "none", "none", 1
 
 # Diagnosed fields:
@@ -24,11 +24,16 @@
  "ocean_model", "u",           "u",           "averages%8dy",  "all", "mean", "none", 2
  "ocean_model", "v",           "v",           "averages%8dy",  "all", "mean", "none", 2
  "ocean_model", "h",           "h",           "averages%8dy",  "all", "mean", "none", 2
- "ocean_model", "e",           "e",           "averages%8dy",  "all", "mean", "none", 2
+#"ocean_model", "e",           "e",           "averages%8dy",  "all", "mean", "none", 2
  "ocean_model", "uh",          "uh",          "averages%8dy",  "all", "mean", "none", 2
  "ocean_model", "vh",          "vh",          "averages%8dy",  "all", "mean", "none", 2
- "ocean_model", "PV",          "PV",          "averages%8dy",  "all", "mean", "none", 2
+#"ocean_model", "PV",          "PV",          "averages%8dy",  "all", "mean", "none", 2
  "ocean_model", "RV",          "RV",          "averages%8dy",  "all", "mean", "none", 2
+ "ocean_model", "RV",          "RV2",         "averages%8dy",  "all", "pow2", "none", 2
+ "ocean_model", "NoSt",        "NoSt2",       "averages%8dy",  "all", "pow2", "none", 2
+ "ocean_model", "ShSt",        "ShSt2",       "averages%8dy",  "all", "pow2", "none", 2
+#"ocean_model", "zos",         "zos2",        "averages%8dy",  "all", "pow2", "none", 2
+#"ocean_model", "zossq",       "zossq",       "averages%8dy",  "all", "mean", "none", 2
 
 # Year long time averages:
  "ocean_model", "u",           "u",           "longmean%8dy",  "all", "mean", "none", 2
@@ -40,6 +45,7 @@
  "ocean_model", "cg1",         "cg1",         "longmean%8dy",  "all", "mean", "none", 2
  "ocean_model", "Rd1",         "Rd1",         "longmean%8dy",  "all", "mean", "none", 2
  "ocean_model", "Rd_dx",       "Rd_dx",       "longmean%8dy",  "all", "mean", "none", 2
+ "ocean_model", "KE",          "KE",          "longmean%8dy",  "all", "mean", "none", 2
 
 # Forcing:
  "ocean_model", "taux",        "taux",        "forcing%8dy",   "all", "none", "none", 2
@@ -55,6 +61,8 @@
  "ocean_model", "geolon_v",    "geolon_v",    "static", "all", .false., "none", 2
  "ocean_model", "geolat_v",    "geolat_v",    "static", "all", .false., "none", 2
  "ocean_model", "area_t",      "area_t",      "static", "all", .false., "none", 1
+ "ocean_model", "area_u",      "area_u",      "static", "all", .false., "none", 1
+ "ocean_model", "area_v",      "area_v",      "static", "all", .false., "none", 1
  "ocean_model", "dyCu",        "dyCu",        "static", "all", .false., "none", 1
  "ocean_model", "dxCv",        "dxCv",        "static", "all", .false., "none", 1
  "ocean_model", "dxCu",        "dxCu",        "static", "all", .false., "none", 1
