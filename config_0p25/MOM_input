@@ -20,6 +20,10 @@ DTBT_RESET_PERIOD = 0.0         !   [s] default = 1200.0
                                 ! is set by DT_THERM.  This is only used if SPLIT is true.
 SAVE_INITIAL_CONDS = True       !   [Boolean] default = False
                                 ! If true, write the initial conditions to a file given by IC_OUTPUT_FILE.
+CORIOLIS_EN_DIS = True          !   [Boolean] default = False
+                                ! If true, two estimates of the thickness fluxes are used to estimate the
+                                ! Coriolis term, and the one that dissipates energy relative to the other one is
+                                ! used.
 
 ! === module MOM_domains ===
 
@@ -127,7 +131,7 @@ BBUILDER_008_FUNC = "ns_scurve_ridge" !
                                 ! The basin builder function to apply with parameters BBUILDER_008_PARS. Choices
                                 ! are: NS_COAST, EW_COAST, CIRC_CONIC_RIDGE, NS_CONIC_RIDGE, CIRC_SCURVE_RIDGE,
                                 ! NS_SCURVE_RIDGE.
-BBUILDER_008_PARS = 30.0, -40.0, 90.0, 20.0, 2000.0 !   [degrees_E,degrees_N,degrees_N,degrees,m]
+BBUILDER_008_PARS = 30.0, -70.0, 90.0, 20.0, 2000.0 !   [degrees_E,degrees_N,degrees_N,degrees,m]
                                 ! NS_SCURVE_RIDGE parameters: longitude, starting latitude, ending latitude,
                                 ! footprint radius, ridge height.
 MAXIMUM_DEPTH = 4000.0          !   [m]
@@ -349,7 +353,7 @@ WIND_CONFIG = "scurves"         !
                                 ! options include (file), (2gyre), (1gyre), (gyres), (zero), and (USER).
 WIND_SCURVES_LATS = -70.0, -45.0, -15.0, 0.0, 15.0, 45.0, 70.0, 13*90.0 !   [degrees N]
                                 ! A list of latitudes defining a piecewise scurve profile for zonal wind stress.
-WIND_SCURVES_TAUX = 0.0, 0.2, -0.05, -0.01, -0.05, 0.1, 14*0.0 !   [Pa]
+WIND_SCURVES_TAUX = 0.0, 0.2, -0.1, -0.02, -0.1, 0.1, 14*0.0 !   [Pa]
                                 ! A list of zonal wind stress values at latitudes WIND_SCURVES_LATS defining a
                                 ! piecewise scurve profile.
 
