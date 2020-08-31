@@ -1,9 +1,10 @@
 #!/bin/csh
 #SBATCH --job-name=neverworld2
-#SBATCH --time=550
+#SBATCH --time=01:00:00
 #SBATCH --qos=normal
 #SBATCH --partition=batch
-#SBATCH --mail-type=fail
+#SBATCH --mail-user=neerajab@princeton.edu
+#SBATCH --mail-type=ALL
 #SBATCH --export=NONE
 #SBATCH --clusters=c3,c4
 #SBATCH --nodes=25
@@ -22,7 +23,7 @@ endif
 echo State of run directory:
 ls -lR
 
-time srun -n 800 ./MOM6
+time srun -n 800 ../build/MOM6
 
 echo -n "Job completion time "
 date
