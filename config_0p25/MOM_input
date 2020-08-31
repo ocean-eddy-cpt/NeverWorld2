@@ -24,7 +24,15 @@ CORIOLIS_EN_DIS = True          !   [Boolean] default = False
                                 ! If true, two estimates of the thickness fluxes are used to estimate the
                                 ! Coriolis term, and the one that dissipates energy relative to the other one is
                                 ! used.
-
+CORIOLIS_SCHEME = "ARAKAWA_HSU90" ! default = "SADOURNY75_ENERGY"
+                                ! CORIOLIS_SCHEME selects the discretization for the Coriolis terms. Valid
+                                ! values are:
+                                !    SADOURNY75_ENERGY - Sadourny, 1975; energy cons.
+                                !    ARAKAWA_HSU90     - Arakawa & Hsu, 1990
+                                !    SADOURNY75_ENSTRO - Sadourny, 1975; enstrophy cons.
+                                !    ARAKAWA_LAMB81    - Arakawa & Lamb, 1981; En. + Enst.
+                                !    ARAKAWA_LAMB_BLEND - A blend of Arakawa & Lamb with
+                                !                         Arakawa & Hsu and Sadourny energy
 ! === module MOM_domains ===
 
 ! === module MOM_hor_index ===
