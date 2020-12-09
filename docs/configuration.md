@@ -1,6 +1,6 @@
 We solve the vector-invariant form of the stacked shallow water equations in a domain with 15 layers and 16 interfaces. 
 
-![alt text]
+![alt text](https://github.com/neerajabhamidipati/NeverWorld2/blob/master/docs/summary.png)
 
 
 ## Topography
