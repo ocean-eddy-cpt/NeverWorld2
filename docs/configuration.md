@@ -136,7 +136,26 @@ NOSLIP = False                  !   [Boolean] default = False
 
 ## Surface wind profile
 
-See notebook `Wind_profile.ipynb`. However, the final configuration uses slightly weaker trade winds with `taud = [0,0.2,-0.05,-0.01,-0.05,0.1,0]` at latitudes in `Wind_profile.ipynb`. With `DIRECT_STRESS = True`, the wind stress is applied over a depth of `MIX_STRESS = 5.0 [m]`.
+See notebook `Wind_profile.ipynb`. However, the final configuration uses slightly weaker trade winds with `taud = [0,0.2,-0.05,-0.01,-0.05,0.1,0]` at latitudes in `Wind_profile.ipynb`. With `DIRECT_STRESS = True`, the wind stress is applied over a depth of `HMIX_STRESS = 5.0 [m]`.
+
+```
+DIRECT_STRESS = True            !   [Boolean] default = False
+                                ! If true, the wind stress is distributed over the topmost HMIX_STRESS of fluid
+                                ! (like in HYCOM), and KVML may be set to a very small value.
+HMIX_FIXED = 5.0                !   [m]
+                                ! The prescribed depth over which the near-surface viscosity and diffusivity are
+                                ! elevated when the bulk mixed layer is not used.
+HMIX_STRESS = 5.0               !   [m] default = 5.0
+                                ! The depth over which the wind stress is applied if DIRECT_STRESS is true.
+KVML = 0.01                     !   [m2 s-1] default = 1.0E-04
+                                ! The kinematic viscosity in the mixed layer.  A typical value is ~1e-2 m2 s-1.
+                                ! KVML is not used if BULKMIXEDLAYER is true.  The default is set by KV.
+BULKMIXEDLAYER = False          !   [Boolean] default = False
+                                ! If true, use a Kraus-Turner-like bulk mixed layer with transitional buffer
+                                ! layers.  Layers 1 through NKML+NKBL have variable densities. There must be at
+                                ! least NKML+NKBL+1 layers if BULKMIXEDLAYER is true. BULKMIXEDLAYER can not be
+                                ! used with USE_REGRIDDING. The default is influenced by ENABLE_THERMODYNAMICS.
+```
 
 ## Rotation of the earth
 
@@ -144,16 +163,79 @@ See notebook `Wind_profile.ipynb`. However, the final configuration uses slightl
 
 ## Horizontal viscosity
 
+We use biharmonic Smagorinsky non-linear viscosity with `SMAG_BI_CONST - 0.2 [nd]`.
+
 ```
-SMAGORINSKY_AH = True    ! biharmonic Smagorinsky nonlinear eddy viscosity
-SMAG_BI_CONST = 0.2 [nd] ! nondimensional biharmonic Smagorinsky constant, typically 0.015 - 0.06
+LAPLACIAN = False               !   [Boolean] default = False
+                                ! If true, use a Laplacian horizontal viscosity.
+BIHARMONIC = True               !   [Boolean] default = True
+                                ! If true, use a biharmonic horizontal viscosity. BIHARMONIC may be used with
+                                ! LAPLACIAN.
+AH = 0.0                        !   [m4 s-1] default = 0.0
+                                ! The background biharmonic horizontal viscosity.
+AH_VEL_SCALE = 0.0              !   [m s-1] default = 0.0
+                                ! The velocity scale which is multiplied by the cube of the grid spacing to
+                                ! calculate the biharmonic viscosity. The final viscosity is the largest of this
+                                ! scaled viscosity, the Smagorinsky and Leith viscosities, and AH.
+AH_TIME_SCALE = 0.0             !   [s] default = 0.0
+                                ! A time scale whose inverse is multiplied by the fourth power of the grid
+                                ! spacing to calculate biharmonic viscosity. The final viscosity is the largest
+                                ! of all viscosity formulations in use. 0.0 means that it's not used.
+SMAGORINSKY_AH = True           !   [Boolean] default = False
+                                ! If true, use a biharmonic Smagorinsky nonlinear eddy viscosity.
+LEITH_AH = False                !   [Boolean] default = False
+                                ! If true, use a biharmonic Leith nonlinear eddy viscosity.
+BOUND_AH = True                 !   [Boolean] default = True
+                                ! If true, the biharmonic coefficient is locally limited to be stable.
+BETTER_BOUND_AH = True          !   [Boolean] default = True
+                                ! If true, the biharmonic coefficient is locally limited to be stable with a
+                                ! better bounding than just BOUND_AH.
+SMAG_BI_CONST = 0.2             !   [nondim] default = 0.0
+                                ! The nondimensional biharmonic Smagorinsky constant, typically 0.015 - 0.06.
+BOUND_CORIOLIS_BIHARM = True    !   [Boolean] default = True
+                                ! If true use a viscosity that increases with the square of the velocity shears,
+                                ! so that the resulting viscous drag is of comparable magnitude to the Coriolis
+                                ! terms when the velocity differences between adjacent grid points is
+                                ! 0.5*BOUND_CORIOLIS_VEL.  The default is the value of BOUND_CORIOLIS (or
+                                ! false).
+BOUND_CORIOLIS_VEL = 5.0        !   [m s-1] default = 5.0
+                                ! The velocity scale at which BOUND_CORIOLIS_BIHARM causes the biharmonic drag
+                                ! to have comparable magnitude to the Coriolis acceleration.  The default is set
+                                ! by MAXVEL.
+USE_LAND_MASK_FOR_HVISC = True  !   [Boolean] default = True
+                                ! If true, use Use the land mask for the computation of thicknesses at velocity
+                                ! locations. This eliminates the dependence on arbitrary values over land or
+                                ! outside of the domain.
+HORVISC_BOUND_COEF = 0.8        !   [nondim] default = 0.8
+                                ! The nondimensional coefficient of the ratio of the viscosity bounds to the
+                                ! theoretical maximum for stability without considering other terms.
 ```
 
-## Vertical mixing scheme
+## Vertical mixing scheme 
 
 Vertical viscosity is given by `KV=1.0E-04 [m2 s-1]`, which is the background kinematic viscosity in the interior. Otherwise it is fully adiabatic.
 
-`ADIABATIC = True !  There are no diapycnal mass fluxes if ADIABATIC is true.`
+## Equation of State
+
+```
+ENABLE_THERMODYNAMICS = False   !   [Boolean] default = True
+                                ! If true, Temperature and salinity are used as state variables.
+USE_EOS = False                 !   [Boolean] default = False
+                                ! If true,  density is calculated from temperature and salinity with an equation
+                                ! of state.  If USE_EOS is true, ENABLE_THERMODYNAMICS must be true as well.
+DIABATIC_FIRST = False          !   [Boolean] default = False
+                                ! If true, apply diabatic and thermodynamic processes, including buoyancy
+                                ! forcing and mass gain or loss, before stepping the dynamics forward.
+USE_CONTEMP_ABSSAL = False      !   [Boolean] default = False
+                                ! If true, the prognostics T&S are the conservative temperature and absolute
+                                ! salinity. Care should be taken to convert them to potential temperature and
+                                ! practical salinity before exchanging them with the coupler and/or reporting
+                                ! T&S diagnostics.
+ADIABATIC = True                !   [Boolean] default = False
+                                ! There are no diapycnal mass fluxes if ADIABATIC is true. This assumes that KD
+                                ! = KDML = 0.0 and that there is no buoyancy forcing, but makes the model faster
+                                ! by eliminating subroutine calls.
+```
 
 ## Bottom drag
 
@@ -185,6 +267,34 @@ HTBL_SHELF_MIN = 0.1            !   [m] default = 0.1
                                 ! This might be Kv/(cdrag*drag_bg_vel) to give Kv as the minimum near-top
                                 ! viscosity.
 ```
+
+## CFL conditions
+
+```
+MAXVEL = 5.0                    !   [m s-1] default = 3.0E+08
+                                ! The maximum velocity allowed before the velocity components are truncated.
+CFL_BASED_TRUNCATIONS = True    !   [Boolean] default = True
+                                ! If true, base truncations on the CFL number, and not an absolute speed.
+CFL_TRUNCATE = 0.5              !   [nondim] default = 0.5
+                                ! The value of the CFL number that will cause velocity components to be
+                                ! truncated; instability can occur past 0.5.
+CFL_REPORT = 0.5                !   [nondim] default = 0.5
+                                ! The value of the CFL number that causes accelerations to be reported; the
+                                ! default is CFL_TRUNCATE.
+CFL_TRUNCATE_RAMP_TIME = 0.0    !   [s] default = 0.0
+                                ! The time over which the CFL truncation value is ramped up at the beginning of
+                                ! the run.
+CFL_TRUNCATE_START = 0.0        !   [nondim] default = 0.0
+                                ! The start value of the truncation CFL number used when ramping up CFL_TRUNC.
+STOKES_MIXING_COMBINED = False  !   [Boolean] default = False
+                                ! Flag to use Stokes drift Mixing via the Lagrangian  current (Eulerian plus
+                                ! Stokes drift).  Still needs work and testing, so not recommended for use.
+VEL_UNDERFLOW = 0.0             !   [m s-1] default = 0.0
+                                ! A negligibly small velocity magnitude below which velocity components are set
+                                ! to 0.  A reasonable value might be 1e-30 m/s, which is less than an Angstrom
+                                ! divided by the age of the universe.
+```
+
 
 
 
