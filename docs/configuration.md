@@ -134,9 +134,9 @@ NOSLIP = False                  !   [Boolean] default = False
                                 ! encouraged, and no slip BCs are not used with the biharmonic viscosity.
 ```
 
-## Surface wind profile
+## Surface forcing
 
-See notebook `Wind_profile.ipynb`. However, the final configuration uses slightly weaker trade winds with `taud = [0,0.2,-0.05,-0.01,-0.05,0.1,0]` at latitudes in `Wind_profile.ipynb`. With `DIRECT_STRESS = True`, the wind stress is applied over a depth of `HMIX_STRESS = 5.0 [m]`.
+See notebook `Wind_profile.ipynb`. With `DIRECT_STRESS = True`, the wind stress is applied over a depth of `HMIX_STRESS = 5.0 [m]`.
 
 ```
 DIRECT_STRESS = True            !   [Boolean] default = False
@@ -155,6 +155,18 @@ BULKMIXEDLAYER = False          !   [Boolean] default = False
                                 ! layers.  Layers 1 through NKML+NKBL have variable densities. There must be at
                                 ! least NKML+NKBL+1 layers if BULKMIXEDLAYER is true. BULKMIXEDLAYER can not be
                                 ! used with USE_REGRIDDING. The default is influenced by ENABLE_THERMODYNAMICS.
+! === module MOM_surface_forcing ===
+BUOY_CONFIG = "zero"            !
+                                ! The character string that indicates how buoyancy forcing is specified. Valid
+                                ! options include (file), (zero), (linear), (USER), (BFB) and (NONE).
+WIND_CONFIG = "scurves"         !
+                                ! The character string that indicates how wind forcing is specified. Valid
+                                ! options include (file), (2gyre), (1gyre), (gyres), (zero), and (USER).
+WIND_SCURVES_LATS = -70.0, -45.0, -15.0, 0.0, 15.0, 45.0, 70.0, 13*90.0 !   [degrees N]
+                                ! A list of latitudes defining a piecewise scurve profile for zonal wind stress.
+WIND_SCURVES_TAUX = 0.0, 0.2, -0.1, -0.02, -0.1, 0.1, 14*0.0 !   [Pa]
+                                ! A list of zonal wind stress values at latitudes WIND_SCURVES_LATS defining a
+                                ! piecewise scurve profile.
 ```
 
 ## Rotation of the earth
