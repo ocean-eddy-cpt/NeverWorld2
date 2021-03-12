@@ -96,6 +96,9 @@ SURFACE_2018_ANSWERS = False    !   [Boolean] default = False
                                 ! If true, use expressions for the surface properties that recover the answers
                                 ! from the end of 2018. Otherwise, use more appropriate expressions that differ
                                 ! at roundoff for non-Boussinesq cases.
+USE_DIABATIC_TIME_BUG = False   !   [Boolean] default = False
+                                ! If true, uses the wrong calendar time for diabatic processes, as was done in
+                                ! MOM6 versions prior to February 2018. This is not recommended.
 SAVE_INITIAL_CONDS = True       !   [Boolean] default = False
                                 ! If true, write the initial conditions to a file given by IC_OUTPUT_FILE.
 IC_OUTPUT_FILE = "MOM_IC"       ! default = "MOM_IC"
@@ -104,6 +107,8 @@ WRITE_GEOM = 1                  ! default = 1
                                 ! If =0, never write the geometry and vertical grid files. If =1, write the
                                 ! geometry and vertical grid files only for a new simulation. If =2, always
                                 ! write the geometry and vertical grid files. Other values are invalid.
+ICE_SHELF = False               !   [Boolean] default = False
+                                ! If true, enables the ice shelf model.
 ENSEMBLE_OCEAN = False          !   [Boolean] default = False
                                 ! If False, The model is being run in serial mode as a single realization. If
                                 ! True, The current model realization is part of a larger ensemble and at the
@@ -348,6 +353,8 @@ USE_BOUNDARY_IMPULSE_TRACER = False !   [Boolean] default = False
                                 ! If true, use the boundary impulse tracer.
 USE_DYED_OBC_TRACER = False     !   [Boolean] default = False
                                 ! If true, use the dyed_obc_tracer tracer package.
+USE_NW2_TRACERS = False         !   [Boolean] default = False
+                                ! If true, use the NeverWorld2 tracers.
 
 ! === module MOM_coord_initialization ===
 COORD_CONFIG = "file"           ! default = "none"
@@ -451,6 +458,8 @@ REMAPPING_2018_ANSWERS = False  !   [Boolean] default = False
                                 ! If true, use the order of arithmetic and expressions that recover the answers
                                 ! from the end of 2018.  Otherwise, use updated and more robust forms of the
                                 ! same expressions.
+USE_GRID_SPACE_DIAGNOSTIC_AXES = False !   [Boolean] default = False
+                                ! If true, use a grid index coordinate convention for diagnostic axes.
 DIAG_COORDS = "z Z ZSTAR"       ! default = "z Z ZSTAR"
                                 ! A list of string tuples associating diag_table modules to a coordinate
                                 ! definition used for diagnostics. Each string is of the form "MODULE_SUFFIX
@@ -586,7 +595,8 @@ DRAG_BG_VEL = 0.01              !   [m s-1] default = 0.0
                                 ! defined.
 BBL_USE_EOS = False             !   [Boolean] default = False
                                 ! If true, use the equation of state in determining the properties of the bottom
-                                ! boundary layer.  Otherwise use the layer target potential densities.
+                                ! boundary layer.  Otherwise use the layer target potential densities.  The
+                                ! default of this is determined by USE_REGRIDDING.
 BBL_THICK_MIN = 0.1             !   [m] default = 0.0
                                 ! The minimum bottom boundary layer thickness that can be used with
                                 ! BOTTOMDRAGLAW. This might be Kv/(cdrag*drag_bg_vel) to give Kv as the minimum
@@ -605,6 +615,9 @@ KV_BBL_MIN = 1.0E-04            !   [m2 s-1] default = 1.0E-04
                                 ! The minimum viscosities in the bottom boundary layer.
 KV_TBL_MIN = 1.0E-04            !   [m2 s-1] default = 1.0E-04
                                 ! The minimum viscosities in the top boundary layer.
+CORRECT_BBL_BOUNDS = False      !   [Boolean] default = False
+                                ! If true, uses the correct bounds on the BBL thickness and viscosity so that
+                                ! the bottom layer feels the intended drag.
 
 ! === module MOM_thickness_diffuse ===
 KHTH = 0.0                      !   [m2 s-1] default = 0.0
@@ -767,6 +780,9 @@ ANALYTIC_FV_PGF = True          !   [Boolean] default = True
 MASS_WEIGHT_IN_PRESSURE_GRADIENT = False !   [Boolean] default = False
                                 ! If true, use mass weighting when interpolating T/S for integrals near the
                                 ! bathymetry in FV pressure gradient calculations.
+USE_INACCURATE_PGF_RHO_ANOM = False !   [Boolean] default = False
+                                ! If true, use a form of the PGF that uses the reference density in an
+                                ! inaccurate way. This is not recommended.
 RECONSTRUCT_FOR_PRESSURE = False !   [Boolean] default = False
                                 ! If True, use vertical reconstruction of T & S within the integrals of the FV
                                 ! pressure gradient calculation. If False, use the constant-by-layer algorithm.
@@ -815,6 +831,9 @@ BOUND_AH = True                 !   [Boolean] default = True
 BETTER_BOUND_AH = True          !   [Boolean] default = True
                                 ! If true, the biharmonic coefficient is locally limited to be stable with a
                                 ! better bounding than just BOUND_AH.
+RE_AH = 0.0                     !   [nondim] default = 0.0
+                                ! If nonzero, the biharmonic coefficient is scaled so that the biharmonic
+                                ! Reynolds number is equal to this.
 SMAG_BI_CONST = 0.2             !   [nondim] default = 0.0
                                 ! The nondimensional biharmonic Smagorinsky constant, typically 0.015 - 0.06.
 BOUND_CORIOLIS_BIHARM = True    !   [Boolean] default = True
@@ -1101,11 +1120,14 @@ VARIABLE_BUOYFORCE = True       !   [Boolean] default = True
                                 ! If true, the buoyancy forcing varies in time after the initialization of the
                                 ! model.
 BUOY_CONFIG = "zero"            ! default = "zero"
-                                ! The character string that indicates how buoyancy forcing is specified. Valid
-                                ! options include (file), (zero), (linear), (USER), (BFB) and (NONE).
+                                ! The character string that indicates how buoyancy forcing is specified.  Valid
+                                ! options include (file), (data_override), (zero), (const), (linear), (MESO),
+                                ! (SCM_CVmix_tests), (BFB), (dumbbell), (USER) and (NONE).
 WIND_CONFIG = "scurves"         ! default = "zero"
-                                ! The character string that indicates how wind forcing is specified. Valid
-                                ! options include (file), (2gyre), (1gyre), (gyres), (zero), and (USER).
+                                ! The character string that indicates how wind forcing is specified.  Valid
+                                ! options include (file), (data_override), (2gyre), (1gyre), (gyres), (zero),
+                                ! (const), (Neverworld), (scurves), (ideal_hurr), (SCM_ideal_hurr),
+                                ! (SCM_CVmix_tests) and (USER).
 WIND_SCURVES_LATS = -70.0, -45.0, -15.0, 0.0, 15.0, 45.0, 70.0, 13*90.0 !   [degrees N]
                                 ! A list of latitudes defining a piecewise scurve profile for zonal wind stress.
 WIND_SCURVES_TAUX = 0.0, 0.2, -0.1, -0.02, -0.1, 0.1, 14*0.0 !   [Pa]
@@ -1127,8 +1149,6 @@ READ_GUST_2D = False            !   [Boolean] default = False
                                 ! If true, use a 2-dimensional gustiness supplied from an input file
 
 ! === module MOM_restart ===
-ICE_SHELF = False               !   [Boolean] default = False
-                                ! If true, enables the ice shelf model.
 USE_WAVES = False               !   [Boolean] default = False
                                 ! If true, enables surface wave modules.
 LA_DEPTH_RATIO = 0.04           !   [nondim] default = 0.04

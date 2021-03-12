@@ -329,8 +329,10 @@ ENERGYSAVEDAYS = 5.0            !   [days] default = 1.0
 
 ! === module MOM_surface_forcing ===
 WIND_CONFIG = "scurves"         ! default = "zero"
-                                ! The character string that indicates how wind forcing is specified. Valid
-                                ! options include (file), (2gyre), (1gyre), (gyres), (zero), and (USER).
+                                ! The character string that indicates how wind forcing is specified.  Valid
+                                ! options include (file), (data_override), (2gyre), (1gyre), (gyres), (zero),
+                                ! (const), (Neverworld), (scurves), (ideal_hurr), (SCM_ideal_hurr),
+                                ! (SCM_CVmix_tests) and (USER).
 WIND_SCURVES_LATS = -70.0, -45.0, -15.0, 0.0, 15.0, 45.0, 70.0, 13*90.0 !   [degrees N]
                                 ! A list of latitudes defining a piecewise scurve profile for zonal wind stress.
 WIND_SCURVES_TAUX = 0.0, 0.2, -0.1, -0.02, -0.1, 0.1, 14*0.0 !   [Pa]
