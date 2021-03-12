@@ -7,7 +7,7 @@ FMS_MODS = affinity astronomy axis_utils block_control constants data_override d
 FMS_MODS = affinity amip_interp astronomy axis_utils block_control column_diagnostics constants coupler data_override diag_integral diag_manager drifters exchange fft field_manager fms fv3gfs horiz_interp include interpolator memutils monin_obukhov mosaic mpp oda_tools platform random_numbers sat_vapor_pres station_data test_fms time_interp time_manager topography tracer_manager tridiagonal
 
 
-MOM6_PATHS = config_src/solo_driver config_src/dynamic_symmetric config_src/external src
+MOM6_PATHS = config_src/drivers/solo_driver config_src/memory/dynamic_symmetric config_src/external config_src/infra/FMS1 src
 
 build/MOM6: build/Makefile
 	cd $(@D) ; make
