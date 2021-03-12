@@ -2,7 +2,8 @@ MOM6
 RESTART
 CPU_stats*
 *.nc
-MOM_parameter_doc.*
+MOM_parameter_doc.debugging
+MOM_parameter_doc.layout
 available_diags.*
 log*
 ocean.stats*
