@@ -1,0 +1,8 @@
+NIGLOBAL = 240
+NJGLOBAL = 560
+DT = 900.
+
+! === module MOM_diag_mediator ===
+DIAG_COODS  = "z Z ZSTAR"
+DIAG_COORD_DEF_Z = "PARAM"
+DIAG_COORD_RES_Z = 5.0, 10.0, 20.0, 50.0, 100.0, 3815.0 ! [m]

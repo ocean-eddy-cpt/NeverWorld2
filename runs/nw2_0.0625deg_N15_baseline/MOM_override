@@ -1,0 +1,6 @@
+NIGLOBAL = 960
+NJGLOBAL = 2240
+DT = 160.
+#override THICKNESS_CONFIG = "file"
+#override THICKNESS_FILE = "INPUT/nw2_0.0625deg_N15_thickness.nc"
+#override ADJUST_THICKNESS = True
