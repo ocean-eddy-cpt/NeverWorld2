@@ -4,9 +4,9 @@ NeverWorld2
 Make a fork on github of:
 https://github.com/ocean-eddy-cpt/NeverWorld2
 
-To clone: 
+To clone:
 ```
-git clone --recursive https://github.com/neerajabhamidipati/NeverWorld2.git
+git clone --recursive https://github.com/ocean-eddy-cpt/NeverWorld2.git
 
 ```
 
@@ -30,6 +30,13 @@ To compile, use
 make -s -j
 ```
 
+or (in Cheyenne)
+
+```
+. scripts/make_FMS
+. scripts/make_repro
+```
+
 To compile in orion, use `Makefile` with
 ```
 make TEMPLATE=src/mkmf/templates/orion-intel.mk
@@ -40,11 +47,11 @@ To compile in gaea, use `Makefile` with
 make TEMPLATE=src/mkmf/templates/ncrc-intel.mk
 ```
 
-To run a test case use the `submit` script on orion:
+To run a test case in Cheyenne:
 ```
-cd config_0p25
-sbatch submit
+cd simulations/baselines/nw2_0.25deg_N15_baseline_hmix20/
+qsub submit_cheyenne
 ```
-Use `submit_cheyenne` on cheyenne and `submit_gaea.csh` on gaea.
+Use `submit_gaea.csh` on gaea.
 
 To start over, delete the directory `build` before continuing with the steps.

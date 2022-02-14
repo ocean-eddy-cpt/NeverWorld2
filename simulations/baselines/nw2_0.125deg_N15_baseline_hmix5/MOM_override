@@ -1,0 +1,8 @@
+NIGLOBAL = 480
+NJGLOBAL = 1120
+DT = 450.
+!#override THICKNESS_CONFIG = "file"
+!#override THICKNESS_FILE = "INPUT/nw2_0.125deg_N15_baseline_hmix5_eta.nc"
+!#override ADJUST_THICKNESS = True
+#override HMIX_UV_SFC_PROP = 5.0
+THICKNESS_TOLERANCE = 0.01

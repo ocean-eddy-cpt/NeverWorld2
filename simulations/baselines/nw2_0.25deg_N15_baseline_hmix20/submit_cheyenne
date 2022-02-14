@@ -1,0 +1,24 @@
+#!/bin/bash
+
+### Job Name
+#PBS -N 0.25deg_hmix20
+
+### Project code
+#PBS -A UNYU0004
+#PBS -l walltime=12:00:00
+#PBS -q regular
+
+### Merge output and error files
+#PBS -j oe
+#PBS -k eod
+
+### Select 8 nodes with 36 CPUs each for a total of 288 MPI processes
+#PBS -l select=16:ncpus=36:mpiprocs=36
+
+### Send email on abort, begin and end
+#PBS -m abe
+### Specify mail recipient (modify and uncomment line below)
+!#PBS -M YOUR_EMAIL
+
+### Run the executable
+mpiexec_mpt ../../../build/intel/ocean_only/repro/MOM6

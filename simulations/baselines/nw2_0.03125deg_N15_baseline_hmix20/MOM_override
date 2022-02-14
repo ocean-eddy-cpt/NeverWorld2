@@ -1,0 +1,10 @@
+NIGLOBAL = 1920
+NJGLOBAL = 4480
+DT = 60.
+!#override THICKNESS_CONFIG = "file"
+!#override THICKNESS_FILE = "INPUT/nw2_0.03125deg_N15_baseline_hmix20_eta.nc"
+!#override ADJUST_THICKNESS = True
+#override HMIX_UV_SFC_PROP = 5.0
+#override HMIX_FIXED = 20.0
+#override HMIX_STRESS = 20.0
+THICKNESS_TOLERANCE = 0.01

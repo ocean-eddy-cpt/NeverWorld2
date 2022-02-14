@@ -1,0 +1,14 @@
+netcdf q {
+dimensions:
+	Layer = 60 ;
+variables:
+	double Layer(Layer) ;
+		Layer:long_name = "Layer Target Potential Density" ;
+		Layer:units = "kg m-3" ;
+		Layer:cartesian_axis = "Z" ;
+		Layer:positive = "up" ;
+
+// global attributes:
+		:filename = "coordinate.nc" ;
+
+}

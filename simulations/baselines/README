@@ -1,0 +1,6 @@
+These are the baseline simulations described in the NW2 paper (add citation later). There are two sets of runs:
+
+* _hmix5, where HMIX_FIXED = HMIX_STRESS =  5.0 m;
+* _hmix20, where HMIX_FIXED = HMIX_STRESS =  20.0 m.
+
+TODO: update description of runs (length of the runs, procedure for initializing interfaces from lower resolution run, etc).

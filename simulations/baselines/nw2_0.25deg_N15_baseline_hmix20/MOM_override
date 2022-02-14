@@ -1,0 +1,6 @@
+NIGLOBAL = 240
+NJGLOBAL = 560
+DT = 900.
+#override HMIX_UV_SFC_PROP = 5.0
+#override HMIX_FIXED = 20.0
+#override HMIX_STRESS = 20.0
