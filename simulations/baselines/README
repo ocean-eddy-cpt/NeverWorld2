@@ -1,6 +1,7 @@
-These are the baseline simulations described in the NW2 paper (add citation later). There are two sets of runs:
+These are the baseline simulations described in the NW2 manuscript (Marques et al., 2022) [TOD: add link]. There are two sets of runs:
 
 * _hmix5, where HMIX_FIXED = HMIX_STRESS =  5.0 m;
 * _hmix20, where HMIX_FIXED = HMIX_STRESS =  20.0 m.
 
-TODO: update description of runs (length of the runs, procedure for initializing interfaces from lower resolution run, etc).
+Only runs labeled _hmix5 have been used in Marques et al., (2022). Please refer to this manuscript for a complete description 
+on the configuration, spinup procedure, and analysis conducted. 
