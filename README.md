@@ -1,6 +1,9 @@
 NeverWorld2
 ===========
 
+This repository contains the NeverWorld2 (NW2) configurations for the baseline experiments described in Marques et al., (2022) [TODO: add a link to the masnuscript]. 
+
+
 Make a fork on github of:
 https://github.com/ocean-eddy-cpt/NeverWorld2
 
